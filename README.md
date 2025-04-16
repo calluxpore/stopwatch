@@ -2,6 +2,10 @@
 
 A simple web-based stopwatch application with lap timing, export functionality, dark mode, and keyboard shortcuts.
 
+## Live Page
+
+https://calluxpore.github.io/stopwatch/
+
 ## Features
 
 *   Start, Stop, Reset timer
