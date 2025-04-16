@@ -280,16 +280,14 @@ websiteLinkBtn.addEventListener('click', () => {
     window.open('https://www.samreddy.work', '_blank');
 });
 
-// Wrap modal logic in DOMContentLoaded
+// NEW Unified DOMContentLoaded listener
 document.addEventListener('DOMContentLoaded', () => {
-    // Define modal constants inside DOMContentLoaded
+    // --- Modal Logic (Copied from original listener) ---
     const showInfoBtn = document.getElementById('show-info');
     const shortcutsModal = document.getElementById('shortcuts-modal');
     const closeModalBtn = document.getElementById('close-modal');
 
-    // Ensure elements exist before adding listeners
     if (showInfoBtn && shortcutsModal && closeModalBtn) {
-        // Info button and modal
         showInfoBtn.addEventListener('click', () => {
             shortcutsModal.classList.add('show');
         });
@@ -298,86 +296,70 @@ document.addEventListener('DOMContentLoaded', () => {
             shortcutsModal.classList.remove('show');
         });
 
-        // Close modal when clicking outside the content
         shortcutsModal.addEventListener('click', (e) => {
             if (e.target === shortcutsModal) {
                 shortcutsModal.classList.remove('show');
             }
         });
 
-        // Close modal with Escape key - Moved inside check
+        // Note: Moved Escape key listener here from the separate keyboard listener below
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && shortcutsModal.classList.contains('show')) {
                 shortcutsModal.classList.remove('show');
             }
         });
     } else {
-        // Optional: Log an error if elements aren't found
         if (!showInfoBtn) console.error('Element with ID "show-info" not found.');
         if (!shortcutsModal) console.error('Element with ID "shortcuts-modal" not found.');
         if (!closeModalBtn) console.error('Element with ID "close-modal" not found.');
     }
-});
 
-// Keyboard shortcuts (Keep outside DOMContentLoaded if elements like buttons are needed earlier? No, better inside too)
-// Let's move the general keyboard shortcuts inside as well, as they reference buttons
-// document.addEventListener('keydown', (e) => { ... }); // Remove original listener
-
-// Re-add keyboard listener inside DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Keyboard shortcuts
+    // --- Keyboard Shortcuts (Copied and adapted from original listener) ---
+    // Note: The Escape key is handled above now.
     document.addEventListener('keydown', (e) => {
-        // Escape key for modal is handled above, but check if modal exists first
-        if (e.key === 'Escape' && shortcutsModal && shortcutsModal.classList.contains('show')) {
-            // Already handled, but could put logic here if needed
-            // shortcutsModal.classList.remove('show'); 
-        }
-
-        // Other shortcuts
         // Ensure buttons exist before trying to click them
+        const lapResetBtn = document.getElementById('lap-reset'); // Get buttons inside listener scope
+        const startStopBtn = document.getElementById('start-stop');
+        const fullscreenBtn = document.getElementById('toggle-fullscreen');
+        const darkModeBtn = document.getElementById('toggle-darkmode');
+
         if (e.key === ' ' && lapResetBtn) {
             e.preventDefault();
             lapResetBtn.click();
         }
-        
+
         if (e.key === 'Enter' && startStopBtn) {
             e.preventDefault();
             startStopBtn.click();
         }
-        
+
         if ((e.key === 'f' || e.key === 'F') && fullscreenBtn) {
             e.preventDefault();
             fullscreenBtn.click();
         }
-        
+
         if ((e.key === 'd' || e.key === 'D') && darkModeBtn) {
             e.preventDefault();
             darkModeBtn.click();
         }
     });
-});
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Mobile warning logic
+    // --- Mobile Warning Logic (Copied from original listener) ---
     const mobileWarning = document.getElementById('mobile-warning');
-    if (window.innerWidth < 768) { // Threshold for mobile devices
+
+    function checkMobileWarning() { // Wrap in function for clarity and reuse
         if (mobileWarning) {
-            mobileWarning.style.display = 'block';
+            if (window.innerWidth < 768) {
+                mobileWarning.style.display = 'block';
+            } else {
+                mobileWarning.style.display = 'none'; // Explicitly hide if not mobile
+            }
         }
     }
 
-    // Optional: Add listener to hide warning if window is resized larger
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) {
-            if (mobileWarning) {
-                mobileWarning.style.display = 'none';
-            }
-        } else {
-             if (mobileWarning) {
-                mobileWarning.style.display = 'block'; // Show again if resized back to small
-            }
-        }
-    });
+    checkMobileWarning(); // Initial check on load
 
-    // ... rest of your DOMContentLoaded code if any ...
+    // Resize listener (Copied from original listener)
+    window.addEventListener('resize', checkMobileWarning); // Use the checking function
+
 }); 
