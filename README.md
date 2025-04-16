@@ -1,6 +1,6 @@
 # Stopwatch
 
-A simple web-based stopwatch application with lap timing, export functionality, dark mode, and keyboard shortcuts.
+A simple web-based stopwatch application with lap timing, export functionality, dark mode, and keyboard shortcuts. Made for Laptop or large screens only. 
 
 ## Live Page
 
