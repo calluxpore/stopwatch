@@ -355,4 +355,29 @@ document.addEventListener('DOMContentLoaded', () => {
             darkModeBtn.click();
         }
     });
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Mobile warning logic
+    const mobileWarning = document.getElementById('mobile-warning');
+    if (window.innerWidth < 768) { // Threshold for mobile devices
+        if (mobileWarning) {
+            mobileWarning.style.display = 'block';
+        }
+    }
+
+    // Optional: Add listener to hide warning if window is resized larger
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            if (mobileWarning) {
+                mobileWarning.style.display = 'none';
+            }
+        } else {
+             if (mobileWarning) {
+                mobileWarning.style.display = 'block'; // Show again if resized back to small
+            }
+        }
+    });
+
+    // ... rest of your DOMContentLoaded code if any ...
 }); 

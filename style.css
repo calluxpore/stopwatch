@@ -720,4 +720,28 @@ body.dark-mode .main-content::after {
     font-size: 0.9em;
     color: var(--secondary-text-color);
     opacity: 0.8;
+}
+
+#mobile-warning {
+    display: none; /* Hidden by default */
+    position: fixed; /* Or absolute, depending on layout */
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 400px;
+    background-color: #ffcc00; /* Warning yellow */
+    color: #333;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 1000; /* Ensure it's on top */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 1rem;
+}
+
+/* Optional: Adjust styles for dark mode if needed */
+body.dark-mode #mobile-warning {
+    background-color: #a08000; /* Darker yellow for dark mode */
+    color: #eee;
 } 
