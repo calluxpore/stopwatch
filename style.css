@@ -1,0 +1,723 @@
+/* Material Icons base style */
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+/* Dark Mode Base Variables */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #212121;
+    --secondary-text-color: #757575;
+    --border-color: #e0e0e0;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #424242;
+    --sidebar-header: #616161;
+    --table-header-bg: #f5f5f5;
+    --table-border: #eeeeee;
+    /* Light Mode Buttons (Using 500 weight colors) */
+    --button-bg: #2196F3;           /* Blue 500 */
+    --button-lap-bg: #03A9F4;        /* Light Blue 500 */
+    --button-stop-bg: #F44336;       /* Red 500 */
+    --button-reset-bg: #FF9800;      /* Orange 500 */
+    --button-icon-color: #ffffff;    /* White icons */
+    --icon-button-color: #616161;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --secondary-text-color: #bdbdbd;
+    --border-color: #424242;
+    --sidebar-bg: #1e1e1e;
+    --sidebar-text: #bdbdbd;
+    --sidebar-header: #eeeeee;
+    --table-header-bg: #2c2c2c;
+    --table-border: #424242;
+    /* Dark Mode Buttons (Using ~400 weight colors with light icon) */
+    --button-bg: #42A5F5;           /* Blue 400 */
+    --button-lap-bg: #29B6F6;        /* Light Blue 400 */
+    --button-stop-bg: #EF5350;       /* Red 400 */
+    --button-reset-bg: #FFA726;      /* Orange 400 */
+    --button-icon-color: var(--text-color); /* Use light text color for icons */
+    --icon-button-color: #bdbdbd;
+}
+
+body {
+    /* Use Roboto font */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Apply variables */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    flex-direction: row-reverse;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+}
+
+.sidebar {
+    width: 280px; /* Slightly wider */
+    /* Apply variables */
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: 20px;
+    overflow-y: auto;
+    border-left: 1px solid var(--border-color);
+    box-shadow: none; /* Remove previous shadow */
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Style for sidebar header that contains title and export button */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--table-border);
+}
+
+.sidebar h2 {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0; /* Remove bottom margin since parent has it */
+    /* Apply variables */
+    color: var(--sidebar-header);
+    font-weight: 500; /* Medium weight */
+    font-size: 1.1em; /* Slightly smaller */
+}
+
+/* Remove old list styling if any remnants */
+#laps-list {
+    display: none; /* Hide definitively */
+}
+
+.laps-table-container { /* Container for table */
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative; /* Needed for sticky header positioning */
+}
+
+.laps-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: 'Roboto Mono', monospace; /* Monospaced for numbers */
+}
+
+.laps-table th,
+.laps-table td {
+    padding: 10px 8px; /* Adjust padding */
+    text-align: right;
+    /* Apply variables */
+    border-bottom: 1px solid var(--table-border);
+    color: var(--sidebar-text);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.laps-table th {
+    /* Apply variables */
+    background-color: var(--table-header-bg);
+    font-weight: 500; /* Medium weight */
+    /* Apply variables */
+    color: var(--secondary-text-color);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-family: 'Roboto', sans-serif; /* Use standard Roboto for headers */
+}
+
+.laps-table th:first-child,
+.laps-table td:first-child {
+    text-align: center;
+    width: 50px; /* Adjusted width */
+    /* Apply variables */
+    color: var(--secondary-text-color);
+    transition: color 0.3s ease;
+}
+
+.laps-table td:nth-child(2) { /* Lap Time */
+    /* Apply variables */
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.laps-table td:nth-child(3) { /* Total Time */
+    font-weight: 500;
+    /* Apply variables */
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Apply variables */
+    background-color: var(--bg-color);
+    position: relative; /* Needed for positioning top controls */
+    transition: background-color 0.3s ease;
+}
+
+/* Styles for the top controls container */
+.top-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+/* Styles for the left controls container */
+.left-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+/* Styles for the icon buttons in the top controls */
+.md-icon-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    margin: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    /* Apply variables */
+    color: var(--icon-button-color);
+    transition: background-color 0.2s ease, color 0.3s ease;
+}
+
+.md-icon-button .material-icons {
+    font-size: 24px;
+}
+
+.md-icon-button:hover {
+    background-color: rgba(0, 0, 0, 0.08); /* Standard hover effect */
+}
+
+body.dark-mode .md-icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.12); /* Dark mode hover */
+}
+
+.timer-display {
+    /* font-size: 7em;  Control font size via JS now */
+    font-family: 'Roboto Mono', monospace;
+    margin-bottom: 40px;
+    /* Apply variables */
+    color: var(--text-color);
+    text-shadow: none;
+    transition: font-size 0.3s ease, color 0.3s ease;
+}
+
+.timer-display span {
+    display: inline-block;
+    min-width: 1.2em; /* Ensure segments have minimum width */
+    text-align: center;
+}
+
+.timer-display #milliseconds {
+    font-size: 0.5em; /* Keep relative size */
+    /* Apply variables */
+    color: var(--secondary-text-color);
+    min-width: 0.8em;
+    margin-left: 0.1em;
+    vertical-align: baseline;
+}
+
+.controls {
+    display: flex; /* Use flexbox for button alignment */
+    gap: 20px; /* Add space between buttons */
+}
+
+.controls button.md-button {
+    /* Material Design Button Styles */
+    display: inline-flex; /* Align icon center */
+    justify-content: center;
+    align-items: center;
+    width: 64px; /* Circular button size */
+    height: 64px;
+    padding: 0;
+    margin: 0; /* Reset margin */
+    font-size: 1.2em;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    /* Apply variables */
+    color: var(--button-icon-color);
+    background-color: var(--button-bg);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    outline: none;
+}
+
+.controls button.md-button .material-icons {
+    font-size: 36px; /* Larger icon size for buttons */
+}
+
+.controls button.md-button:hover {
+    opacity: 1; /* Remove default hover opacity */
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific button state colors using variables */
+#start-stop.running {
+    background-color: var(--button-stop-bg);
+}
+
+#lap-reset.reset {
+    background-color: var(--button-reset-bg);
+    color: var(--button-icon-color); /* Ensure icon color is set */
+}
+
+#lap-reset {
+     background-color: var(--button-lap-bg);
+}
+
+/* Fullscreen specific styles */
+:root:fullscreen .sidebar {
+    display: none; /* Hide sidebar */
+}
+
+:root:fullscreen .main-content {
+    /* Ensure main content takes full width */
+    width: 100%;
+    border-left: none;
+    height: 100vh;
+    /* Remove flex centering, use absolute positioning for children */
+    display: block; /* Change from flex */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    position: relative; /* Keep as positioning context */
+}
+
+:root:fullscreen .top-controls {
+    /* Hide all top controls by default in fullscreen */
+    display: none;
+}
+
+:root:fullscreen .left-controls {
+    /* Hide all left controls by default in fullscreen */
+    display: none;
+}
+
+:root:fullscreen .top-controls #toggle-darkmode {
+    /* Specifically show the dark mode button again */
+    display: inline-flex; 
+    position: absolute; /* Reposition it if needed */
+    top: 20px;
+    right: 20px;
+}
+
+:root:fullscreen .top-controls #website-link {
+    /* Show the website link button in fullscreen */
+    display: inline-flex;
+    position: absolute;
+    top: 20px;
+    right: 70px; /* Position to the left of the dark mode button */
+}
+
+:root:fullscreen .left-controls #reload-page {
+    /* Specifically show the reload button again */
+    display: inline-flex; 
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+:root:fullscreen .left-controls #show-info {
+    /* Show the info button in fullscreen */
+    display: inline-flex;
+    position: absolute;
+    top: 20px;
+    left: 70px; /* Position to the right of the reload button */
+}
+
+/* Style for the centering group */
+.timer-center-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* position: relative; Remove from base style */
+}
+
+/* Position the timer group absolutely in fullscreen */
+:root:fullscreen .timer-center-group {
+    position: absolute;
+    top: 40%; /* Move it slightly above center */
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    /* Remove width: 100% - don't need full width */
+}
+
+:root:fullscreen .timer-display {
+    font-size: 8em;
+    margin-bottom: 40px; /* Keep margin from controls */
+}
+
+/* Styles for fullscreen-only laps display */
+#fullscreen-laps {
+    display: none; 
+    /* Remove layout-affecting properties */
+    /* margin-top: 0; */
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1em;
+    color: var(--secondary-text-color);
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+/* Show and style fullscreen laps container ONLY in fullscreen */
+:root:fullscreen #fullscreen-laps {
+    display: block;
+    position: fixed; /* Use fixed instead of absolute */
+    top: 60%; /* Fixed position below the timer */
+    left: 50%;
+    transform: translateX(-50%);
+    /* Reset margins completely */
+    margin: 0;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Remove old p5.js styles */
+/* Styles for p5.js canvas container */
+#canvas-container {
+    display: none; /* Hide the old container */
+}
+
+/* Make sure canvas is properly sized */
+#canvas-container canvas {
+    display: none; /* Hide the old canvas */
+}
+
+/* CSS-based background animation */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Create floating shapes */
+.background-animation::before,
+.background-animation::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 15px;
+    background: #2196F3; /* Blue 500 */
+    opacity: 0.08;
+    animation: float1 25s infinite linear;
+}
+
+.background-animation::before {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+    transform-origin: center center;
+}
+
+.background-animation::after {
+    top: 60%;
+    left: 60%;
+    width: 350px;
+    height: 350px;
+    background: #03A9F4; /* Light Blue 500 */
+    opacity: 0.07;
+    animation: float2 30s infinite linear;
+    animation-delay: -5s;
+}
+
+/* Add more floating elements using pseudo elements on the container */
+.container::before,
+.container::after {
+    content: '';
+    position: fixed;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 15px;
+}
+
+.container::before {
+    width: 250px;
+    height: 250px;
+    top: 30%;
+    left: 70%;
+    background: #FF9800; /* Orange 500 */
+    opacity: 0.06;
+    animation: float3 28s infinite linear;
+    animation-delay: -8s;
+}
+
+.container::after {
+    width: 400px;
+    height: 400px;
+    top: 70%;
+    left: 30%;
+    background: #009688; /* Teal 500 */
+    opacity: 0.05;
+    animation: float4 35s infinite linear;
+    animation-delay: -15s;
+}
+
+/* Additional shapes for more visual interest */
+.main-content::before, 
+.main-content::after {
+    content: '';
+    position: fixed;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 50%; /* Make these circular */
+}
+
+.main-content::before {
+    width: 200px;
+    height: 200px;
+    top: 20%;
+    right: 20%;
+    background: #F44336; /* Red 500 */
+    opacity: 0.07;
+    animation: float5 22s infinite linear;
+    animation-delay: -12s;
+}
+
+.main-content::after {
+    width: 280px;
+    height: 280px;
+    bottom: 15%;
+    left: 15%;
+    background: #673AB7; /* Deep Purple 500 */
+    opacity: 0.06;
+    animation: float6 32s infinite linear;
+    animation-delay: -20s;
+}
+
+/* Dark mode styles for shapes */
+body.dark-mode .background-animation::before { 
+    background: #42A5F5; /* Blue 400 */
+    opacity: 0.12; 
+}
+body.dark-mode .background-animation::after { 
+    background: #29B6F6; /* Light Blue 400 */
+    opacity: 0.11;
+}
+body.dark-mode .container::before { 
+    background: #FFA726; /* Orange 400 */
+    opacity: 0.09;
+}
+body.dark-mode .container::after { 
+    background: #26A69A; /* Teal 400 */
+    opacity: 0.08;
+}
+body.dark-mode .main-content::before { 
+    background: #EF5350; /* Red 400 */
+    opacity: 0.10;
+}
+body.dark-mode .main-content::after { 
+    background: #7E57C2; /* Deep Purple 400 */
+    opacity: 0.09;
+}
+
+/* Animation keyframes */
+@keyframes float1 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(10%, 15%) rotate(90deg); }
+    50% { transform: translate(5%, 5%) rotate(180deg); }
+    75% { transform: translate(-5%, 10%) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float2 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-8%, 10%) rotate(120deg); }
+    66% { transform: translate(8%, -10%) rotate(240deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float3 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-15%, -10%) rotate(90deg); }
+    50% { transform: translate(-5%, -15%) rotate(180deg); }
+    75% { transform: translate(10%, -5%) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float4 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(10%, 5%) rotate(72deg); }
+    40% { transform: translate(5%, 15%) rotate(144deg); }
+    60% { transform: translate(-10%, 10%) rotate(216deg); }
+    80% { transform: translate(-5%, -10%) rotate(288deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float5 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    30% { transform: translate(-8%, 12%) rotate(110deg); }
+    60% { transform: translate(10%, -8%) rotate(220deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float6 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(12%, -10%) rotate(90deg); }
+    50% { transform: translate(8%, 10%) rotate(180deg); }
+    75% { transform: translate(-12%, 8%) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+/* Ensure container is above the background but below UI elements */
+.container {
+    position: relative;
+    z-index: 1; /* Above background animations */
+    height: 100vh;
+    background-color: transparent;
+}
+
+/* Designer signature */
+.designer-signature {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--secondary-text-color);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+:root:fullscreen .designer-signature {
+    display: block; /* Ensure visible in fullscreen */
+    position: fixed;
+    bottom: 10px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-color);
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: var(--text-color);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.shortcuts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.shortcuts-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.shortcuts-list .key {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    margin-right: 10px;
+    font-family: 'Roboto Mono', monospace;
+    min-width: 60px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    color: var(--sidebar-text);
+}
+
+.designer-credit {
+    margin-top: 20px;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    opacity: 0.8;
+} 

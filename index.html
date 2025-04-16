@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Replace canvas container with CSS-based animation background -->
+    <div class="background-animation"></div>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Laps</h2>
+                <button id="export-csv" class="md-icon-button" title="Export to CSV">
+                    <span class="material-icons">file_download</span>
+                </button>
+            </div>
+            <div class="laps-table-container">
+                <table class="laps-table">
+                    <thead>
+                        <tr>
+                            <th>Lap</th>
+                            <th>Time</th>
+                            <th>Total time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="laps-table-body">
+                        <!-- Lap rows will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="top-controls">
+                <button id="decrease-font" class="md-icon-button" title="Decrease font size">
+                    <span class="material-icons">remove</span>
+                </button>
+                <button id="increase-font" class="md-icon-button" title="Increase font size">
+                    <span class="material-icons">add</span>
+                </button>
+                <button id="toggle-fullscreen" class="md-icon-button" title="Toggle fullscreen (Press F)">
+                    <span class="material-icons">fullscreen</span>
+                </button>
+                <button id="toggle-darkmode" class="md-icon-button" title="Toggle dark mode (Press D)">
+                    <span class="material-icons">brightness_4</span>
+                </button>
+                <button id="website-link" class="md-icon-button" title="Visit website">
+                    <span class="material-icons">star</span>
+                </button>
+            </div>
+            <!-- New left controls -->
+            <div class="left-controls">
+                <button id="reload-page" class="md-icon-button" title="Reload page">
+                    <span class="material-icons">refresh</span>
+                </button>
+                <button id="show-info" class="md-icon-button" title="Keyboard Shortcuts Info">
+                    <span class="material-icons">info</span>
+                </button>
+            </div>
+            <div class="timer-center-group">
+                <div class="timer-display">
+                    <span id="minutes">00</span>:<span id="seconds">00</span>.<span id="milliseconds">00</span>
+                </div>
+                <div class="controls">
+                    <button id="start-stop" class="md-button" title="Start/Stop (Press Enter)">
+                        <span class="material-icons">play_arrow</span>
+                    </button>
+                    <button id="lap-reset" class="md-button" title="Lap/Reset (Press Space)">
+                        <span class="material-icons">timer</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Container for recent laps shown only in fullscreen -->
+            <div id="fullscreen-laps"></div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    
+    <!-- Keyboard shortcuts modal -->
+    <div id="shortcuts-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keyboard Shortcuts</h2>
+                <button id="close-modal" class="md-icon-button"><span class="material-icons">close</span></button>
+            </div>
+            <div class="modal-body">
+                <ul class="shortcuts-list">
+                    <li><span class="key">Space</span> Record Lap / Reset Timer</li>
+                    <li><span class="key">Enter</span> Start / Stop Timer</li>
+                    <li><span class="key">F</span> Toggle Fullscreen</li>
+                    <li><span class="key">D</span> Toggle Dark Mode</li>
+                </ul>
+                <div class="designer-credit">Designed by Sam</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
