@@ -346,13 +346,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Mobile Warning Logic (Copied from original listener) ---
     const mobileWarning = document.getElementById('mobile-warning');
+    const bodyElement = document.body; // Get body element
 
-    function checkMobileWarning() { // Wrap in function for clarity and reuse
+    function checkMobileWarning() {
         if (mobileWarning) {
             if (window.innerWidth < 768) {
-                mobileWarning.style.display = 'block';
+                mobileWarning.style.display = 'flex'; // Use flex to enable centering
+                bodyElement.classList.add('mobile-warning-active'); // Add class to body
             } else {
-                mobileWarning.style.display = 'none'; // Explicitly hide if not mobile
+                mobileWarning.style.display = 'none';
+                bodyElement.classList.remove('mobile-warning-active'); // Remove class from body
             }
         }
     }

@@ -722,26 +722,48 @@ body.dark-mode .main-content::after {
     opacity: 0.8;
 }
 
+/* Mobile warning takes over screen */
 #mobile-warning {
-    display: none; /* Hidden by default */
-    position: fixed; /* Or absolute, depending on layout */
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    max-width: 400px;
-    background-color: #ffcc00; /* Warning yellow */
-    color: #333;
-    padding: 15px;
-    border-radius: 5px;
+    display: none; /* Still hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* White background */
+    color: #333; /* Dark text */
+    padding: 20px; /* Padding for the text */
     text-align: center;
-    z-index: 1000; /* Ensure it's on top */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    font-size: 1rem;
+    z-index: 1001; /* Ensure it's above everything, including modal */
+    /* Use flexbox to center the text content vertically and horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem; /* Slightly larger text */
+    box-sizing: border-box; /* Include padding in width/height */
+    /* Remove properties no longer needed for full screen */
+    /* transform: translateX(-50%); */
+    /* max-width: 400px; */
+    /* border-radius: 5px; */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.2); */
 }
 
-/* Optional: Adjust styles for dark mode if needed */
-body.dark-mode #mobile-warning {
-    background-color: #a08000; /* Darker yellow for dark mode */
-    color: #eee;
+/* No dark mode needed for white background */
+/* body.dark-mode #mobile-warning { ... } */
+
+/* Media query to hide main content on small screens */
+@media (max-width: 767px) {
+    .container,
+    .background-animation {
+        /* This will be overridden by JS if warning is shown */
+        /* We rely on JS setting display: block for the warning */
+        /* Consider if we should just hide these when warning is active */
+        /* Let's adjust JS instead to add a class to body */
+    }
+}
+
+/* Hide main content when the warning is active (via body class) */
+body.mobile-warning-active .container,
+body.mobile-warning-active .background-animation {
+    display: none;
 } 
